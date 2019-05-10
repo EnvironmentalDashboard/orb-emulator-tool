@@ -1,0 +1,265 @@
+<html>
+    <head>
+        <title>Orb Emulator Tool</title>
+        <style>
+            body {
+                font-family: arial;
+                padding: 0;
+                margin: 0;
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+
+            .col-1-2 {
+                width: 50%;
+                padding: 20px;
+                height: 100%;
+                overflow: auto;
+                float: left;
+            }
+
+            .formsaver-controller {
+                margin: 20px 0;
+            }
+
+            .log {
+                font-family: monospace;
+            }
+
+            .log span.level {
+                padding-right: 20px;
+            }
+
+            .log p.error {
+                color: red;
+                font-weight: bold;
+            }
+
+            .log p.notice {
+                font-weight: bold;
+            }
+
+        </style>
+    </head>
+
+    <body>
+        <div class="app-wrap">
+            <div class="app-controller col-1-2">
+                <h1>Instruction Dispatcher</h1>
+
+                <div class="formsaver-controller">
+                    <select id="formsaver-saved-forms"></select>
+                    <input type="button" value="Refresh list" id="formsaver-refresh">
+                    <input type="button" value="Open" id="formsaver-open">
+                    <input type="button" value="Delete" id="formsaver-delete">
+                    <input type="button" value="Save" id="formsaver-save">
+                    <input type="button" value="Save as..." id="formsaver-save-as">
+                    <input type="button" Value="Load default" id="formsaver-default">
+                </div>
+
+                <form id="emulator-form">
+                    <div>
+                        <label>LIFX Auth token</label>
+                        <p>
+                            <input type="text" name="auth_token">
+                        </p>
+                    </div>
+
+                    <div>
+                        <label>LIFX Selector</label>
+                        <p>
+                            <input type="text" name="selector">
+                        </p>
+                    </div>
+
+                    <div>
+                        <label>Color Set</label>
+                        <p>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td>Initial (H, S, L)</td>
+                                        <td>Final (H, S, L)</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Color 0</td>
+                                        <td>
+                                            <input type="number" name="color_0_i_h" min="0" max="360">
+                                            <input type="number" name="color_0_i_s" step="0.01" min="0" max="1">
+                                            <input type="number" name="color_0_i_l" step="0.01" min="0" max="1">
+                                        </td>
+                                        <td>
+                                            <input type="number" name="color_0_f_h" min="0" max="360">
+                                            <input type="number" name="color_0_f_s" step="0.01" min="0" max="1">
+                                            <input type="number" name="color_0_f_l" step="0.01" min="0" max="1">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Color 1</td>
+                                        <td>
+                                            <input type="number" name="color_1_i_h" min="0" max="360">
+                                            <input type="number" name="color_1_i_s" step="0.01" min="0" max="1">
+                                            <input type="number" name="color_1_i_l" step="0.01" min="0" max="1">
+                                        </td>
+                                        <td>
+                                            <input type="number" name="color_1_f_h" min="0" max="360">
+                                            <input type="number" name="color_1_f_s" step="0.01" min="0" max="1">
+                                            <input type="number" name="color_1_f_l" step="0.01" min="0" max="1">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Color 2</td>
+                                        <td>
+                                            <input type="number" name="color_2_i_h" min="0" max="360">
+                                            <input type="number" name="color_2_i_s" step="0.01" min="0" max="1">
+                                            <input type="number" name="color_2_i_l" step="0.01" min="0" max="1">
+                                        </td>
+                                        <td>
+                                            <input type="number" name="color_2_f_h" min="0" max="360">
+                                            <input type="number" name="color_2_f_s" step="0.01" min="0" max="1">
+                                            <input type="number" name="color_2_f_l" step="0.01" min="0" max="1">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Color 3</td>
+                                        <td>
+                                            <input type="number" name="color_3_i_h" min="0" max="360">
+                                            <input type="number" name="color_3_i_s" step="0.01" min="0" max="1">
+                                            <input type="number" name="color_3_i_l" step="0.01" min="0" max="1">
+                                        </td>
+                                        <td>
+                                            <input type="number" name="color_3_f_h" min="0" max="360">
+                                            <input type="number" name="color_3_f_s" step="0.01" min="0" max="1">
+                                            <input type="number" name="color_3_f_l" step="0.01" min="0" max="1">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Color 4</td>
+                                        <td>
+                                            <input type="number" name="color_4_i_h" min="0" max="360">
+                                            <input type="number" name="color_4_i_s" step="0.01" min="0" max="1">
+                                            <input type="number" name="color_4_i_l" step="0.01" min="0" max="1">
+                                        </td>
+                                        <td>
+                                            <input type="number" name="color_4_f_h" min="0" max="360">
+                                            <input type="number" name="color_4_f_s" step="0.01" min="0" max="1">
+                                            <input type="number" name="color_4_f_l" step="0.01" min="0" max="1">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Color 5</td>
+                                        <td>
+                                            <input type="number" name="color_5_i_h" min="0" max="360">
+                                            <input type="number" name="color_5_i_s" step="0.01" min="0" max="1">
+                                            <input type="number" name="color_5_i_l" step="0.01" min="0" max="1">
+                                        </td>
+                                        <td>
+                                            <input type="number" name="color_5_f_h" min="0" max="360">
+                                            <input type="number" name="color_5_f_s" step="0.01" min="0" max="1">
+                                            <input type="number" name="color_5_f_l" step="0.01" min="0" max="1">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Color 6</td>
+                                        <td>
+                                            <input type="number" name="color_6_i_h" min="0" max="360">
+                                            <input type="number" name="color_6_i_s" step="0.01" min="0" max="1">
+                                            <input type="number" name="color_6_i_l" step="0.01" min="0" max="1">
+                                        </td>
+                                        <td>
+                                            <input type="number" name="color_6_f_h" min="0" max="360">
+                                            <input type="number" name="color_6_f_s" step="0.01" min="0" max="1">
+                                            <input type="number" name="color_6_f_l" step="0.01" min="0" max="1">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Color 7</td>
+                                        <td>
+                                            <input type="number" name="color_7_i_h" min="0" max="360">
+                                            <input type="number" name="color_7_i_s" step="0.01" min="0" max="1">
+                                            <input type="number" name="color_7_i_l" step="0.01" min="0" max="1">
+                                        </td>
+                                        <td>
+                                            <input type="number" name="color_7_f_h" min="0" max="360">
+                                            <input type="number" name="color_7_f_s" step="0.01" min="0" max="1">
+                                            <input type="number" name="color_7_f_l" step="0.01" min="0" max="1">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Color 8</td>
+                                        <td>
+                                            <input type="number" name="color_8_i_h" min="0" max="360">
+                                            <input type="number" name="color_8_i_s" step="0.01" min="0" max="1">
+                                            <input type="number" name="color_8_i_l" step="0.01" min="0" max="1">
+                                        </td>
+                                        <td>
+                                            <input type="number" name="color_8_f_h" min="0" max="360">
+                                            <input type="number" name="color_8_f_s" step="0.01" min="0" max="1">
+                                            <input type="number" name="color_8_f_l" step="0.01" min="0" max="1">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Color 9</td>
+                                        <td>
+                                            <input type="number" name="color_9_i_h" min="0" max="360">
+                                            <input type="number" name="color_9_i_s" step="0.01" min="0" max="1">
+                                            <input type="number" name="color_9_i_l" step="0.01" min="0" max="1">
+                                        </td>
+                                        <td>
+                                            <input type="number" name="color_9_f_h" min="0" max="360">
+                                            <input type="number" name="color_9_f_s" step="0.01" min="0" max="1">
+                                            <input type="number" name="color_9_f_l" step="0.01" min="0" max="1">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </p>
+                    </div>
+
+                    <div>
+                        <label>Frequency Formula</label>
+                        <p class="explains">An expression to convert a relative usage percent, x (0-100) to a frequency. Multiplications must be indicated with an asterisk (*). Characters allowed: 0-9, x, +, -, *, /, ., (, ). No spaces.</p>
+                        <p>
+                            <input type="text" name="frequency_formula_Hz" pattern="[(0-9)x\+\-\*\/\.\(\)]{1,}"> Hz
+                        </p>
+                    </div>
+
+                    <div>
+                        <label>Display interval</label>
+                        <p>
+                            <input type="number" name="interval_s"> s
+                        </p>
+                    </div>
+
+                    <div>
+                        <label>Sequence (no commas, spaces, or any other separators). Example: 11240.</label>
+                        <p>
+                            <textarea name="bulb_state_sequence"></textarea>
+                        </p>
+                    </div>
+
+                    <div>
+                        <input type="submit" value="Dispatch">
+                    </div>
+                </form>
+            </div>
+            <div class="app-view col-1-2">
+                <div id="emulator-log" class="app-log log">
+                </div>
+            </div>
+        </div>
+
+        <!-- dependencies -->
+        <script type="text/javascript" src="js/emulator.business.js?884"></script>
+        <script type="text/javascript" src="js/form-saver.business.js?884"></script>
+
+        <!-- application interfaces/adapters -->
+        <script type="text/javascript" src="js/emulator.interface.js?884"></script>
+        <script type="text/javascript" src="js/form-saver.interface.js?884"></script>
+    </body>
+</html>
